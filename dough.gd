@@ -23,5 +23,5 @@ func initialize(player_position, target_position, camera_dir):
 	
 func _fall(delta):
 	grav_vel = Vector3.ZERO if is_on_floor() else grav_vel.move_toward(Vector3(0, velocity.y - gravity, 0), gravity * delta)
-	velocity = velocity + grav_vel
+	velocity = velocity - abs(grav_vel)
 	

@@ -10,6 +10,5 @@ func _shoot():
 	var player_position = $Player.position
 	var collision_point = $Player/PlayerView/RayCast3D.get_collision_point()
 	var camera_dir = -$Player/PlayerView/Camera.get_camera_transform().basis.z
-	print(collision_point)
 	dough.initialize(player_position, collision_point, camera_dir)
 	add_child(dough)

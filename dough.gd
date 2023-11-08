@@ -14,13 +14,11 @@ func _physics_process(delta):
 		else:
 			_fall(delta)
 
-func initialize(player_position, target_position, camera_pos):
+func initialize(player_position, target_position, camera_dir):
 	var start_position: Vector3 = Vector3(player_position.x, player_position.y, player_position.z)
 	look_at_from_position(start_position, target_position, Vector3.UP)
-	velocity = Vector3.FORWARD * throw_speed
-	velocity = velocity.rotated(Vector3.UP, rotation.y)
-	velocity = velocity.rotated(Vector3(1,0,0), rotation.x)
-	velocity = velocity.rotated(Vector3(0,0,1), rotation.z)
+	var vel_dir: Vector3 = camera_dir.normalized()
+	velocity = velocity.move_toward(vel_dir * throw_speed * vel_dir.length(), 100)
 	
 	
 func _fall(delta):

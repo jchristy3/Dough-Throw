@@ -4,6 +4,8 @@ var grav_vel: Vector3
 var throw_speed = 40
 var gravity: float = 3
 var hasHit = false
+var scaleSpeed = 1
+var maxScale = 5
 
 func _physics_process(delta):
 	if !hasHit:
@@ -13,6 +15,9 @@ func _physics_process(delta):
 			hasHit = true
 		else:
 			_fall(delta)
+	else:
+		stick()
+		grow(delta)
 
 func initialize(player_position, target_position, camera_dir):
 	var start_position: Vector3 = Vector3(player_position.x, player_position.y, player_position.z)
@@ -24,4 +29,11 @@ func initialize(player_position, target_position, camera_dir):
 func _fall(delta):
 	grav_vel = Vector3.ZERO if is_on_floor() else grav_vel.move_toward(Vector3(0, velocity.y - gravity, 0), gravity * delta)
 	velocity = velocity - abs(grav_vel)
+	
+func stick():
+	pass
+
+func grow(delta):
+	scale = Vector3(scale.x + scaleSpeed * delta, scale.y + scaleSpeed * delta, scale.z + scaleSpeed * delta)
+	scale = scale.clamp(scale, Vector3(maxScale, maxScale, maxScale))
 	

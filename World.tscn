@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d02uwgo66diyq"]
+[gd_scene load_steps=12 format=3 uid="uid://d02uwgo66diyq"]
 
 [ext_resource type="Script" path="res://World.gd" id="1_8k32f"]
 [ext_resource type="PackedScene" uid="uid://b6tsmicfh84nx" path="res://Player/Player.tscn" id="1_84w4j"]
@@ -21,6 +21,20 @@ height = 3.0
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_mu07t"]
 height = 3.0
 radius = 1.5
+
+[sub_resource type="GDScript" id="GDScript_uthl2"]
+script/source = "extends CharacterBody3D
+
+func _physics_process(delta):
+	var player_position: Vector3 = $\"../Player\".position
+	look_at_from_position(position, player_position, Vector3.UP)
+	velocity = Vector3.FORWARD * 100 * delta
+	print(velocity)
+"
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_5nctl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x8fps"]
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_8k32f")
@@ -109,3 +123,13 @@ grow_vertical = 2
 text = "X"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7004, -13.868)
+script = SubResource("GDScript_uthl2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+mesh = SubResource("CapsuleMesh_5nctl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_x8fps")

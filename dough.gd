@@ -30,7 +30,7 @@ func _fall(delta):
 	velocity = velocity - abs(grav_vel)
 	
 func stick(collision):
-	print(collision.get_collider().velocity)
+	pass
 
 func grow(delta):
 	scale = Vector3(scale.x + scaleSpeed * delta, scale.y + scaleSpeed * delta, scale.z + scaleSpeed * delta)

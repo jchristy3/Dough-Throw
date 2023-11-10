@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://d02uwgo66diyq"]
+[gd_scene load_steps=13 format=3 uid="uid://d02uwgo66diyq"]
 
 [ext_resource type="Script" path="res://World.gd" id="1_8k32f"]
 [ext_resource type="PackedScene" uid="uid://b6tsmicfh84nx" path="res://Player/Player.tscn" id="1_84w4j"]
 [ext_resource type="PackedScene" uid="uid://d18stx63b8r2b" path="res://dough.tscn" id="2_j6fm2"]
+[ext_resource type="PackedScene" uid="uid://c42c3movd4qnu" path="res://Enemy/Enemy.tscn" id="4_pbca4"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ixan6"]
 
@@ -133,3 +134,6 @@ mesh = SubResource("CapsuleMesh_5nctl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("CapsuleShape3D_x8fps")
+
+[node name="Enemy" parent="." instance=ExtResource("4_pbca4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.32258, 4.96306, 8.31337)

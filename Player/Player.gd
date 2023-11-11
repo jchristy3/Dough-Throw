@@ -31,12 +31,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		if mouse_captured: _rotate_camera()
 	if Input.is_action_just_pressed("jump"): jumping = true
 	if Input.is_action_just_pressed("exit"): get_tree().quit()
-	if Input.is_action_just_pressed("shoot"): _shoot()
 
 func _physics_process(delta: float) -> void:
 	if mouse_captured: _handle_joypad_camera_rotation(delta)
 	velocity = _walk(delta) + _gravity(delta) + _jump(delta)
 	move_and_slide()
+	
+	if Input.is_action_just_pressed("shoot"): _shoot()
 
 func capture_mouse() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -77,7 +78,6 @@ func _jump(delta: float) -> Vector3:
 	return jump_vel
 	
 func _shoot():
-	var player_position = position
 	var collision_point = $PlayerView/RayCast3D.get_collision_point()
 	var camera_direction = -$PlayerView/Camera.get_camera_transform().basis.z
-	shoot_dough.emit(player_position, collision_point, camera_direction)
+	shoot_dough.emit(position, collision_point, camera_direction)

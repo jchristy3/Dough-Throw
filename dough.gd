@@ -7,22 +7,32 @@ var hasHit = false
 var scaleSpeed = 1
 var maxScale = 5
 var force: Vector3 = Vector3(0,0,0);
+var lastPrinted = ""
+var stuck = false
+var growing = false
+
+@onready var joint: PinJoint3D = $PinJoint3D
 
 func _physics_process(delta):
-	get_colliding_bodies()
+	if !stuck:
+		stick()
 	
-func initialize(player_position, target_position, camera_dir):
+	if growing:
+		grow(delta)
+	
+func initialize(player_position, target_position, camera_direction):
 	var start_position: Vector3 = Vector3(player_position.x, player_position.y, player_position.z)
+	start_position += camera_direction.normalized()
 	look_at_from_position(start_position, target_position, Vector3.UP)
-	force = camera_dir.normalized() * throw_speed
+	force = camera_direction.normalized() * throw_speed
 	apply_force(force)
 	
-func stick(collision):
-#	var joint: PinJoint3D = $PinJoint3D
-#	#joint.node_a = NodePath("Dough")
-#	joint.node_b = NodePath(collision.get_collider_rid())
-	var collision_object = collision.get_collider()
-	print(collision_object)
+func stick():
+	var bodies = get_colliding_bodies()
+	
+	for i in bodies:
+		if i.get_name() == "Player" || i.get_name() == "Dough":
+			joint.node_b = NodePath(i.get_name())
 	
 func grow(delta):
 	scale = Vector3(scale.x + scaleSpeed * delta, scale.y + scaleSpeed * delta, scale.z + scaleSpeed * delta)

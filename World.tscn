@@ -29,14 +29,14 @@ dough_scene = ExtResource("2_j6fm2")
 
 [node name="Environment" type="Node3D" parent="."]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment"]
+[node name="Floor" type="StaticBody3D" parent="Environment"]
 collision_mask = 0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Floor"]
 transform = Transform3D(30.5077, 0, 0, 0, 1, 0, 0, 0, 36.5741, 0, 0, 0)
 mesh = SubResource("BoxMesh_ixan6")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor"]
 shape = SubResource("BoxShape3D_fy4qb")
 
 [node name="Pillar" type="StaticBody3D" parent="Environment"]

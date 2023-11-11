@@ -7,11 +7,12 @@ var hasHit = false
 var scaleSpeed = 1
 var maxScale = 5
 var force: Vector3 = Vector3(0,0,0);
-var lastPrinted = ""
 var stuck = false
 var growing = false
 
 @onready var joint: PinJoint3D = $PinJoint3D
+@onready var collisionShape: CollisionShape3D = $CollisionShape3D
+@onready var meshInstance: MeshInstance3D = $MeshInstance3D
 
 func _physics_process(delta):
 	if !stuck:
@@ -31,10 +32,17 @@ func stick():
 	var bodies = get_colliding_bodies()
 	
 	for i in bodies:
-		if i.get_name() == "Player" || i.get_name() == "Dough":
-			joint.node_b = NodePath(i.get_name())
+		var bName = i.get_name()
+		if bName == "Floor" || bName == "Dough" || bName == "Enemy" || bName.contains("Pillar"):
+			joint.node_a = get_path()
+			joint.node_b = NodePath(i.get_path())
+			growing = true
+			sleeping = true
 	
 func grow(delta):
-	scale = Vector3(scale.x + scaleSpeed * delta, scale.y + scaleSpeed * delta, scale.z + scaleSpeed * delta)
-	scale = scale.clamp(scale, Vector3(maxScale, maxScale, maxScale))
+	var sphere: SphereShape3D = SphereShape3D.new()
+	collisionShape.scale = Vector3(collisionShape.scale.x + scaleSpeed * delta, collisionShape.scale.y + scaleSpeed * delta, collisionShape.scale.z + scaleSpeed * delta)
+	collisionShape.scale = collisionShape.scale.clamp(scale, Vector3(maxScale, maxScale, maxScale))
+	meshInstance.scale = Vector3(meshInstance.scale.x + scaleSpeed * delta, meshInstance.scale.y + scaleSpeed * delta, meshInstance.scale.z + scaleSpeed * delta)
+	meshInstance.scale = meshInstance.scale.clamp(scale, Vector3(maxScale, maxScale, maxScale))
 	

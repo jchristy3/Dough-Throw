@@ -1,37 +1,29 @@
-extends CharacterBody3D
+extends RigidBody3D
 
 var grav_vel: Vector3
-var throw_speed = 40
+var throw_speed = 2000
 var gravity: float = 3
 var hasHit = false
 var scaleSpeed = 1
 var maxScale = 5
+var force: Vector3 = Vector3(0,0,0);
 
 func _physics_process(delta):
-	var collision = move_and_collide(velocity * delta)
+	get_colliding_bodies()
 	
-	if !hasHit:
-		if collision:
-			hasHit = true
-		else:
-			_fall(delta)
-	else:
-		stick(collision)
-		grow(delta)
-
 func initialize(player_position, target_position, camera_dir):
 	var start_position: Vector3 = Vector3(player_position.x, player_position.y, player_position.z)
 	look_at_from_position(start_position, target_position, Vector3.UP)
-	var vel_dir: Vector3 = camera_dir.normalized()
-	velocity = velocity.move_toward(vel_dir * throw_speed * vel_dir.length(), 100)
-	
-func _fall(delta):
-	grav_vel = Vector3.ZERO if is_on_floor() else grav_vel.move_toward(Vector3(0, velocity.y - gravity, 0), gravity * delta)
-	velocity = velocity - abs(grav_vel)
+	force = camera_dir.normalized() * throw_speed
+	apply_force(force)
 	
 func stick(collision):
-	pass
-
+#	var joint: PinJoint3D = $PinJoint3D
+#	#joint.node_a = NodePath("Dough")
+#	joint.node_b = NodePath(collision.get_collider_rid())
+	var collision_object = collision.get_collider()
+	print(collision_object)
+	
 func grow(delta):
 	scale = Vector3(scale.x + scaleSpeed * delta, scale.y + scaleSpeed * delta, scale.z + scaleSpeed * delta)
 	scale = scale.clamp(scale, Vector3(maxScale, maxScale, maxScale))

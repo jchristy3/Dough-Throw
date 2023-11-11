@@ -15,7 +15,7 @@ height = 0.2
 
 [node name="Dough" type="RigidBody3D"]
 collision_layer = 4
-collision_mask = 7
+collision_mask = 5
 script = ExtResource("1_bpswb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -24,3 +24,5 @@ shape = SubResource("SphereShape3D_xqdp7")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_d6dtg")
 skeleton = NodePath("")
+
+[node name="PinJoint3D" type="PinJoint3D" parent="."]

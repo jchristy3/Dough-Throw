@@ -137,3 +137,5 @@ shape = SubResource("CapsuleShape3D_x8fps")
 
 [node name="Enemy" parent="." instance=ExtResource("4_pbca4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.32258, 4.96306, 8.31337)
+
+[connection signal="shoot_dough" from="Player" to="." method="_on_player_shoot_dough"]

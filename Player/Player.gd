@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal shoot_dough(player_position: Vector3, collision_point: Vector3, camera_direction: Vector3)
+
 @export_range(1, 35, 1) var speed: float = 10 # m/s
 @export_range(10, 400, 1) var acceleration: float = 100 # m/s^2
 
@@ -29,6 +31,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if mouse_captured: _rotate_camera()
 	if Input.is_action_just_pressed("jump"): jumping = true
 	if Input.is_action_just_pressed("exit"): get_tree().quit()
+	if Input.is_action_just_pressed("shoot"): _shoot()
 
 func _physics_process(delta: float) -> void:
 	if mouse_captured: _handle_joypad_camera_rotation(delta)
@@ -72,3 +75,9 @@ func _jump(delta: float) -> Vector3:
 		return jump_vel
 	jump_vel = Vector3.ZERO if is_on_floor() else jump_vel.move_toward(Vector3.ZERO, gravity * delta)
 	return jump_vel
+	
+func _shoot():
+	var player_position = position
+	var collision_point = $PlayerView/RayCast3D.get_collision_point()
+	var camera_direction = -$PlayerView/Camera.get_camera_transform().basis.z
+	shoot_dough.emit(player_position, collision_point, camera_direction)

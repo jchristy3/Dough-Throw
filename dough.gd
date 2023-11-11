@@ -10,7 +10,7 @@ var force: Vector3 = Vector3(0,0,0);
 var stuck = false
 var growing = false
 
-@onready var joint: PinJoint3D = $PinJoint3D
+@onready var joint: HingeJoint3D = $PinJoint3D
 @onready var collisionShape: CollisionShape3D = $CollisionShape3D
 @onready var meshInstance: MeshInstance3D = $MeshInstance3D
 
@@ -23,7 +23,7 @@ func _physics_process(delta):
 	
 func initialize(player_position, target_position, camera_direction):
 	var start_position: Vector3 = Vector3(player_position.x, player_position.y, player_position.z)
-	start_position += camera_direction.normalized()
+	start_position += camera_direction.normalized() * 3
 	look_at_from_position(start_position, target_position, Vector3.UP)
 	force = camera_direction.normalized() * throw_speed
 	apply_force(force)

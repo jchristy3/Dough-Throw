@@ -27,7 +27,7 @@ radius = 1.5
 script = ExtResource("1_8k32f")
 dough_scene = ExtResource("2_j6fm2")
 
-[node name="Environment" type="Node3D" parent="."]
+[node name="Environment" type="Node3D" parent="." groups=["StaticEnvironment"]]
 
 [node name="Floor" type="StaticBody3D" parent="Environment"]
 collision_mask = 0
@@ -72,7 +72,7 @@ metadata/_edit_lock_ = true
 shape = SubResource("CylinderShape3D_mu07t")
 metadata/_edit_lock_ = true
 
-[node name="Player" parent="." instance=ExtResource("1_84w4j")]
+[node name="Player" parent="." groups=["Players"] instance=ExtResource("1_84w4j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.10261, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -111,7 +111,7 @@ text = "X"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Enemy" parent="." instance=ExtResource("4_pbca4")]
+[node name="Enemy" parent="." groups=["Players"] instance=ExtResource("4_pbca4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.32258, 4.96306, 8.31337)
 
 [connection signal="shoot_dough" from="Player" to="." method="_on_player_shoot_dough"]

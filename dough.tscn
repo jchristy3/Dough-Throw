@@ -1,6 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://d18stx63b8r2b"]
+[gd_scene load_steps=6 format=3 uid="uid://d18stx63b8r2b"]
 
 [ext_resource type="Script" path="res://dough.gd" id="1_bpswb"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_06c63"]
+rough = true
+bounce = 1.0
+absorbent = true
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xqdp7"]
 radius = 0.1
@@ -13,10 +18,11 @@ material = SubResource("StandardMaterial3D_rpl84")
 radius = 0.1
 height = 0.2
 
-[node name="Dough" type="RigidBody3D"]
+[node name="Dough" type="RigidBody3D" groups=["Dough_Thrown"]]
 collision_layer = 4
 collision_mask = 13
-max_contacts_reported = 3
+physics_material_override = SubResource("PhysicsMaterial_06c63")
+max_contacts_reported = 60
 contact_monitor = true
 script = ExtResource("1_bpswb")
 

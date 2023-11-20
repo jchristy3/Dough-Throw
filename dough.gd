@@ -21,7 +21,6 @@ var absoluteMaxScale = 10
 @onready var meshInstance: MeshInstance3D = $MeshInstance3D
 
 func _physics_process(delta):
-	print(scale)
 	if !stuck:
 		bodies = get_colliding_bodies()
 		if bodies.size() > 0:
@@ -47,8 +46,7 @@ func stick(bodies, delta):
 	
 	for b in bodies:
 		var bName = b.get_name()
-		
-		if bName == "Dough":
+		if b.is_in_group("Dough_Thrown"):
 			if b.get_maxScale() < absoluteMaxScale:
 				b.increase_size(delta)
 				queue_free()

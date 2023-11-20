@@ -9,6 +9,3 @@ func initialize(start_position: Vector3, _scale: Vector3):
 	position = start_position
 	meshInstance.scale = _scale
 	collisionShape.scale = _scale
-
-func grow():
-	pass

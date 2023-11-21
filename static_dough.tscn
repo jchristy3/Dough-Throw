@@ -13,7 +13,7 @@ material = SubResource("StandardMaterial3D_u2fyj")
 radius = 0.1
 height = 0.2
 
-[node name="StaticDough" type="StaticBody3D" groups=["StaticEnvironment"]]
+[node name="StaticDough" type="StaticBody3D" groups=["Dough"]]
 collision_mask = 6
 script = ExtResource("1_fqmrc")
 

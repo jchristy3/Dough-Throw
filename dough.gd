@@ -25,9 +25,6 @@ func _physics_process(delta):
 		bodies = get_colliding_bodies()
 		if bodies.size() > 0:
 			stick(bodies, delta)
-	
-	if !at_max_scale:
-		grow(delta)
 	else:
 		convert_dough(bodies)
 	
@@ -44,38 +41,19 @@ func stick(bodies, delta):
 	freeze = true
 	stuck = true
 	
-	for b in bodies:
-		var bName = b.get_name()
-		if b.is_in_group("Dough_Thrown"):
-			if b.get_maxScale() < absoluteMaxScale:
-				b.increase_size(delta)
-				queue_free()
-		elif bName == "Floor" || bName == "Enemy" || bName.contains("Pillar"):
-			joint.node_a = get_path()
-			joint.node_b = NodePath(b.get_path())
+	var b = bodies[0]
+	var bName = b.get_name()
 	
-func grow(delta):
-	collisionShape.scale = Vector3(collisionShape.scale.x + scaleSpeed * delta, collisionShape.scale.y + scaleSpeed * delta, collisionShape.scale.z + scaleSpeed * delta)
-	collisionShape.scale = collisionShape.scale.clamp(scale, Vector3(maxScale, maxScale, maxScale))
-	meshInstance.scale = Vector3(meshInstance.scale.x + scaleSpeed * delta, meshInstance.scale.y + scaleSpeed * delta, meshInstance.scale.z + scaleSpeed * delta)
-	meshInstance.scale = meshInstance.scale.clamp(scale, Vector3(maxScale, maxScale, maxScale))
-	if meshInstance.scale == Vector3(maxScale, maxScale, maxScale):
-		at_max_scale = true
-		
+	if b.is_in_group("StaticEnvironment"):
+		convert_dough(bodies)
+	elif b.is_in_group("Dough") && !b.is_done_growing():
+		b.bump_size(delta)
+		queue_free()
+	
 func convert_dough(bodies: Array[Node3D]):
 	if bodies.size() > 0:
 		create_stuck_dough.emit(position, bodies[0], meshInstance.scale)
 		queue_free()
-		
-func increase_size(delta):
-	maxScale += 1
-	collisionShape.scale = Vector3(collisionShape.scale.x + jumpScaleSpeed * delta, collisionShape.scale.y + jumpScaleSpeed * delta, collisionShape.scale.z + jumpScaleSpeed * delta)
-	collisionShape.scale = collisionShape.scale.clamp(scale, Vector3(maxScale, maxScale, maxScale))
-	meshInstance.scale = Vector3(meshInstance.scale.x + jumpScaleSpeed * delta, meshInstance.scale.y + jumpScaleSpeed * delta, meshInstance.scale.z + jumpScaleSpeed * delta)
-	meshInstance.scale = meshInstance.scale.clamp(scale, Vector3(maxScale, maxScale, maxScale))
-	
-func get_maxScale():
-	return maxScale
 		
 
 	

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://b64q7shbitcx"]
+
+[ext_resource type="Script" path="res://static_dough.gd" id="1_ofonb"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ktnti"]
+radius = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u2fyj"]
+albedo_color = Color(0.901961, 0.709804, 0.623529, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_y08op"]
+material = SubResource("StandardMaterial3D_u2fyj")
+radius = 0.1
+height = 0.2
+
+[node name="StaticDough" type="StaticBody3D" groups=["Dough"]]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_ofonb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ktnti")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_y08op")
+skeleton = NodePath("../CollisionShape3D")

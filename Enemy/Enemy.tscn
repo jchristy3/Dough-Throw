@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c42c3movd4qnu"]
+[gd_scene load_steps=5 format=3 uid="uid://c42c3movd4qnu"]
 
 [ext_resource type="Script" path="res://Enemy/Enemy.gd" id="1_duafw"]
+[ext_resource type="PackedScene" uid="uid://b64q7shbitcx" path="res://MovingDough/MovingDough.tscn" id="2_acl85"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4wpn1"]
 
@@ -10,6 +11,7 @@
 collision_layer = 10
 collision_mask = 3
 script = ExtResource("1_duafw")
+dough_scene = ExtResource("2_acl85")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00253046, 0)

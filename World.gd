@@ -11,7 +11,7 @@ func _on_player_shoot_dough(player_position, collision_point, camera_direction):
 	
 func _on_dough_scene_create_stuck_dough(position: Vector3, body: Node3D, _scale: Vector3):
 	if body.is_in_group("Players"):
-		pass
+		body.add_dough(position, _scale)
 	else:
 		create_static_dough(position, _scale)
 		

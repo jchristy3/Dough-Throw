@@ -18,7 +18,7 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _physics_process(delta):
 	var player_position = get_node("../Player")
 	look_at_from_position(position, player_position.position, Vector3.UP)
-	velocity = Vector3.FORWARD * 2
+	velocity = Vector3.FORWARD * speed
 	velocity = velocity.rotated(Vector3.UP, rotation.y)
 	move_and_slide()
 	
@@ -27,3 +27,5 @@ func add_dough(_position, _scale):
 	var dough = dough_scene.instantiate()
 	dough.initialize(dough_position, _scale)
 	add_child(dough)
+	speed = speed * .9
+	
